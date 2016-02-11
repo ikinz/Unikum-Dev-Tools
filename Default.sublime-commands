@@ -1,0 +1,10 @@
+[
+	{
+		"caption": "Unidevtools: Clean IDL",
+		"command": "clean_idl"
+	},
+	{
+		"caption": "Unidevtools: List all strings",
+		"command": "list_all_strings"
+	}
+]
