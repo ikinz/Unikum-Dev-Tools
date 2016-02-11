@@ -22,7 +22,7 @@ class ListAllStringsCommand(sublime_plugin.TextCommand):
 		regions = self.view.find_all("('|\").+('|\")")
 		sourceStart = self.view.find(">SOURCE", 0)
 		pattern = re.compile(".+(?i)lng_text.+")
-		regions = [x for x in regions if x.b > sourceStart.b and not pattern.match(self.view.substr(self.view.full_line(x)))] #"lng_text" not in self.view.substr(self.view.full_line(x))]
+		regions = [x for x in regions if x.b > sourceStart.b and not pattern.match(self.view.substr(self.view.full_line(x)))]
 		f = sublime.active_window().new_file()
 		counter = 0
 		for line in regions:
