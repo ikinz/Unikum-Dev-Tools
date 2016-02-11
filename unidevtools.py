@@ -1,5 +1,8 @@
 import sublime, sublime_plugin, re
 
+# - Unikum AB -
+# Skapat av Pierre Schönbeck
+
 class CleanIdlCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		regions = self.view.find_all("(?i)IDL_\d+")	# Hitta alla ställen där IDL-nummer finns
