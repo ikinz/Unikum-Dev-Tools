@@ -1,0 +1,95 @@
+%YAML1.2
+---
+# Syntax för BETA++
+# Skapat av Pierre Schönbeck
+# - Unikum AB -
+
+name: BETA
+file_extensions: [d, b, i]
+scope: source.beta
+contexts:
+  main:
+    
+    # Strings
+    - match: '"'
+      scope: punctuation.definition.string.begin.beta
+      push: double_quoted_string
+    - match: "'"
+      scope: punctuation.definition.string.begin.beta
+      push: single_quoted_string
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.beta
+      push: line_comment
+
+    - match: '\*(?i)rem'
+      scope: punctuation.definition.comment.beta
+      push: multi_comment
+
+    # Keywords 
+    - match: '\b(?i)(function|end|begin|if|ifl|else_ifl|else|endifl|while|wend)\b'
+      scope: keyword.control.beta
+    - match: '#(uselib|include)\b'
+      scope: entity.other.attribute-name.beta
+    - match: '\*(define)\b'
+      scope: entity.other.attribute-name.beta
+
+    # Constants
+    - match: '\b(true|false|yes|no|)\b'
+      scope: constant.language.beta
+
+    # Operators
+    - match: '\b(not|or|and)\b'
+      scope: keyword.Operators.beta
+    - match: '(\+|\-|\*|\/|=|>=|<=|->|<|>|<>|\?|&)'
+      scope: keyword.Operators.beta
+    - match: '%(?i)(S|T|U|J|N|Q|Z|A|9)'
+      scope: constant.character.beta
+    - match: '%(?i)(C|D|I|L|R|P)(?-i)\d+'
+      scope: constant.character.beta
+    - match: '%(?i)(F|G|M)(?-i)\d+.\d+'
+      scope: constant.character.beta
+
+    # Dnr
+    - match: '[#][0-9]+'
+      scope: entity.other.attribute-name.beta
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.beta
+
+    # Datatypes
+    - match: '\b(?i)(int|str|bool)\b'
+      scope: storage.type.beta
+
+    # IDL
+    - match: '(?i)IDL_\d+'
+      scope: constant.numeric.beta
+
+    # Events
+    - match: '[@][A-Za-z0-9]+[_][A-Za-z0-9]+'
+      scope: keyword.control.beta
+
+  #Functions 
+  double_quoted_string:
+    - meta_scope: string.quoted.double.beta
+    - match: '"'
+      scope: punctuation.definition.string.end.beta
+      pop: true
+
+  single_quoted_string:
+    - meta_scope: string.quoted.single.beta
+    - match: "'"
+      scope: punctuation.definition.string.end.beta
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.beta
+    - match: $
+      pop: true
+
+  multi_comment:
+    - meta_scope: comment.multi_comment.beta
+    - match: '\*(?i)endrem'
+      pop: true
