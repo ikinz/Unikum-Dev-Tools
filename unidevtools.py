@@ -18,7 +18,7 @@ class CleanIdlCommand(sublime_plugin.TextCommand):
 			if self.view.substr(idl) not in afterCode:
 				unusedIDL.append(idl)
 
-		# Auto remove or show in other tab depending on settings
+		# Rensa automatiskt eller visa IDL-texter i annan flik beroende på inställningar
 		if self.view.settings().get("auto_idl_removal"):
 			for line in reversed(unusedIDL):
 				self.view.erase(edit, self.view.full_line(line))
