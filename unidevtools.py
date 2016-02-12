@@ -4,6 +4,9 @@ import sublime, sublime_plugin, re
 # - Unikum AB -
 # Skapat av Pierre Schönbeck
 
+# ---------------------------------------------
+# Rensar alla IDL-texter som inte används.
+# ---------------------------------------------
 class CleanIdlCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		regions = self.view.find_all("(?i)IDL_\d+")	# Hitta alla ställen där IDL-nummer finns
@@ -21,6 +24,15 @@ class CleanIdlCommand(sublime_plugin.TextCommand):
 		#f.set_syntax_file("Packages/User/BETA.sublime-syntax")
 		#sublime.active_window().focus_view(f)
 
+# ---------------------------------------------
+# Ger en lista över alla rader med strängar som
+# saknar en lng_text på samma rad.
+#
+# Notera att denna funktion inte tar hänsyn 
+# till om två eller flera strängar finns på 
+# samma rad och åtminstånde en av dessa visas
+# genom lng_text.
+# ---------------------------------------------
 class ListAllStringsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		regions = self.view.find_all("('|\").+('|\")")
@@ -34,6 +46,11 @@ class ListAllStringsCommand(sublime_plugin.TextCommand):
 		f.set_syntax_file("Packages/User/BETA.sublime-syntax")
 		sublime.active_window().focus_view(f)
 
+# ---------------------------------------------
+# Listar alla oanvända funktioner. Funktioner
+# som ligger i filen men som saknar referenser
+# kommer listas i en separat flik.
+# ---------------------------------------------
 class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 	def extractFunc(self, text, startswith):
 		patFunc = re.compile(startswith + "\s", re.IGNORECASE)
