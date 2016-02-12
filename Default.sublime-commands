@@ -10,5 +10,19 @@
 	{
 		"caption": "Unidevtools: Find unused functions",
 		"command": "unused_functions"
+	},
+	{
+		"caption": "Unidevtools: Enable automatic removal of IDL-texts",
+		"command": "enable_auto_idl_removal",
+		"args": {
+			"prop": "auto_idl_removal"
+		}
+	},
+	{
+		"caption": "Unidevtools: Disable automatic removal of IDL-texts",
+		"command": "disable_auto_idl_removal",
+		"args": {
+			"prop": "auto_idl_removal"
+		}
 	}
 ]

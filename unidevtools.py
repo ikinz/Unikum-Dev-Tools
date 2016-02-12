@@ -17,12 +17,17 @@ class CleanIdlCommand(sublime_plugin.TextCommand):
 		for idl in beforeCode:
 			if self.view.substr(idl) not in afterCode:
 				unusedIDL.append(idl)
-		#f = sublime.active_window().new_file()
-		for line in reversed(unusedIDL):
-			self.view.erase(edit, self.view.full_line(line))
-			#counter += f.insert(edit, counter, self.view.substr(self.view.full_line(line)))
-		#f.set_syntax_file("Packages/User/BETA.sublime-syntax")
-		#sublime.active_window().focus_view(f)
+
+		# Auto remove or show in other tab depending on settings
+		if self.view.settings().get("auto_idl_removal"):
+			for line in reversed(unusedIDL):
+				self.view.erase(edit, self.view.full_line(line))
+		else:
+			f = sublime.active_window().new_file()
+			for line in reversed(unusedIDL):
+				counter += f.insert(edit, counter, self.view.substr(self.view.full_line(line)))
+			f.set_syntax_file("Packages/User/BETA.sublime-syntax")
+			sublime.active_window().focus_view(f)
 
 # ---------------------------------------------
 # Ger en lista över alla rader med strängar som
@@ -89,5 +94,17 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 			counter += f.insert(edit, counter, line + "\n")
 		sublime.active_window().focus_view(f)
 
+# ---------------------------------------------
+# Aktivera automatisk IDL-borttagning.
+# ---------------------------------------------
+class EnableAutoIdlRemovalCommand(sublime_plugin.TextCommand):
+	def run(self, edit, prop):
+		self.view.settings().set(prop, True)
 
+# ---------------------------------------------
+# Deaktivera automatisk IDL-borttagning.
+# ---------------------------------------------
+class DisableAutoIdlRemovalCommand(sublime_plugin.TextCommand):
+	def run(self, edit, prop):
+		self.view.settings().set(prop, False)
 
