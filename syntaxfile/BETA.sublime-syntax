@@ -30,17 +30,17 @@ contexts:
     # Keywords 
     - match: '\b(?i)(function|end|begin|if|ifl|else_ifl|else|endifl|while|wend)\b'
       scope: keyword.control.beta
-    - match: '#(uselib|include)\b'
+    - match: '(?i)#(uselib|include)\b'
       scope: entity.other.attribute-name.beta
-    - match: '\*(define)\b'
+    - match: '\*(?i)(define)\b'
       scope: entity.other.attribute-name.beta
 
     # Constants
-    - match: '\b(true|false|yes|no|)\b'
+    - match: '\b(?i)(true|false|yes|no|)\b'
       scope: constant.language.beta
 
     # Operators
-    - match: '\b(not|or|and)\b'
+    - match: '\b(?i)(not|or|and)\b'
       scope: keyword.Operators.beta
     - match: '(\+|\-|\*|\/|=|>=|<=|->|<|>|<>|\?|&)'
       scope: keyword.Operators.beta
