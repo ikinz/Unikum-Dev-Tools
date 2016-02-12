@@ -43,8 +43,8 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 		for line in lines:
 			text = self.view.substr(line)
 			if text.upper().startswith("FUNCTION"):
-				patFunc = re.compile("function", re.IGNORECASE)
-				patType = re.compile("(str|bool|int)", re.IGNORECASE)
+				patFunc = re.compile("function\s", re.IGNORECASE)
+				patType = re.compile("(str|bool|int)\s", re.IGNORECASE)
 				text = patFunc.sub("", text)
 				text = patType.sub("", text)
 				indexEnd = text.index("(")
