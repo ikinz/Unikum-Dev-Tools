@@ -1,5 +1,6 @@
 import sublime, sublime_plugin, re
 
+# Uni-Dev-Tools
 # - Unikum AB -
 # Skapat av Pierre Schönbeck
 
@@ -34,7 +35,16 @@ class ListAllStringsCommand(sublime_plugin.TextCommand):
 		sublime.active_window().focus_view(f)
 
 class UnusedFunctionsCommand(sublime_plugin.TextCommand):
-	# Lägg till support för declare!
+	def extractFunc(self, text, startswith):
+		patFunc = re.compile(startswith + "\s", re.IGNORECASE)
+		patType = re.compile("(str|bool|int)\s", re.IGNORECASE)
+		text = patFunc.sub("", text)
+		text = patType.sub("", text)
+		indexEnd = text.index("(")
+		text = text[:indexEnd]
+		text = text.strip(" \t\n\r")
+		return text
+
 	def run(self, edit):
 		functions = {}
 		unusedFunc = []
@@ -43,13 +53,11 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 		for line in lines:
 			text = self.view.substr(line)
 			if text.upper().startswith("FUNCTION"):
-				patFunc = re.compile("function\s", re.IGNORECASE)
-				patType = re.compile("(str|bool|int)\s", re.IGNORECASE)
-				text = patFunc.sub("", text)
-				text = patType.sub("", text)
-				indexEnd = text.index("(")
-				text = text[:indexEnd]
-				text = text.strip(" \t\n\r")
+				text = self.extractFunc(text, "function")
+				if text not in functions:
+					functions[text] = 0
+			elif text.upper().startswith("DECLARE"):
+				text = self.extractFunc(text, "declare")
 				functions[text] = 0
 			else:
 				for func in functions:
