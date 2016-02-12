@@ -6,5 +6,9 @@
 	{
 		"caption": "Unidevtools: List all strings",
 		"command": "list_all_strings"
+	},
+	{
+		"caption": "Unidevtools: Find unused functions",
+		"command": "unused_functions"
 	}
 ]

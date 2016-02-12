@@ -33,3 +33,36 @@ class ListAllStringsCommand(sublime_plugin.TextCommand):
 		f.set_syntax_file("Packages/User/BETA.sublime-syntax")
 		sublime.active_window().focus_view(f)
 
+class UnusedFunctionsCommand(sublime_plugin.TextCommand):
+	# Lägg till support för declare!
+	def run(self, edit):
+		functions = {}
+		unusedFunc = []
+		sourceStart = self.view.find(">SOURCE", 0)
+		lines = self.view.lines(sublime.Region(sourceStart.b, self.view.size()))
+		for line in lines:
+			text = self.view.substr(line)
+			if text.upper().startswith("FUNCTION"):
+				patFunc = re.compile("function", re.IGNORECASE)
+				patType = re.compile("(str|bool|int)", re.IGNORECASE)
+				text = patFunc.sub("", text)
+				text = patType.sub("", text)
+				indexEnd = text.index("(")
+				text = text[:indexEnd]
+				text = text.strip(" \t\n\r")
+				functions[text] = 0
+			else:
+				for func in functions:
+					if func in text:
+						functions[func] += 1
+		for func in functions:
+			if functions[func] == 0:
+				unusedFunc.append(func)
+		f = sublime.active_window().new_file()
+		counter = 0
+		for line in unusedFunc:
+			counter += f.insert(edit, counter, line + "\n")
+		sublime.active_window().focus_view(f)
+
+
+
