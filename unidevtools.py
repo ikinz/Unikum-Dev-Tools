@@ -23,6 +23,7 @@ class CleanIdlCommand(sublime_plugin.TextCommand):
 			for line in reversed(unusedIDL):
 				self.view.erase(edit, self.view.full_line(line))
 		else:
+			counter = 0
 			f = sublime.active_window().new_file()
 			for line in reversed(unusedIDL):
 				counter += f.insert(edit, counter, self.view.substr(self.view.full_line(line)))

@@ -4,7 +4,7 @@
 		"command": "clean_idl"
 	},
 	{
-		"caption": "Unidevtools: List all strings",
+		"caption": "Unidevtools: List hard coded strings",
 		"command": "list_all_strings"
 	},
 	{
