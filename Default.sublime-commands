@@ -12,6 +12,10 @@
 		"command": "unused_functions"
 	},
 	{
+		"caption": "Unidevtools: Generate event callbacks",
+		"command": "generate_events"
+	},
+	{
 		"caption": "Unidevtools: Enable automatic removal of IDL-texts",
 		"command": "enable_auto_idl_removal",
 		"args": {

@@ -1,4 +1,5 @@
 import sublime, sublime_plugin, re
+from . import WindowControl
 
 # Uni-Dev-Tools
 # - Unikum AB -
@@ -94,6 +95,35 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 		for line in unusedFunc:
 			counter += f.insert(edit, counter, line + "\n")
 		sublime.active_window().focus_view(f)
+
+# ---------------------------------------------
+# Generera händelsehantering. Funktioner som
+# hanterar de viktigaste händelserna för olika
+# kontroller kommer att skapas. Vissa kommer
+# vara implementerade men de flesta kommer
+# behöva kompleteras med specifik data.
+# ---------------------------------------------
+class GenerateEventsCommand(sublime_plugin.TextCommand):
+	def scanControls(self):
+		ctrlToFind = ["EF"]#,"D","CB","GR"]
+		controls = []
+		ctrlStart = self.view.find(">WINDOW", 0)
+		ctrlEnd = self.view.find(">SOURCE", 0)
+		lines = self.view.lines(sublime.Region(ctrlStart.b, ctrlEnd.a))
+		for line in lines:
+			text = self.view.substr(line)
+			if text[:2].rstrip() in ctrlToFind:
+				rowArr = text.split()
+				controls.append(WindowControl.WindowControl(self.view, rowArr[9], rowArr[0], rowArr[10]))
+		return controls
+
+
+	def run(self, edit):
+		controls = self.scanControls()
+		trimmedControls = [x for x in controls if x.name != "-"] # Ta bort controller utan namn
+		for c in trimmedControls:
+			print(c)
+
 
 # ---------------------------------------------
 # Aktivera automatisk IDL-borttagning.
