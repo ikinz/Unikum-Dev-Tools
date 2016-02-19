@@ -86,7 +86,7 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 			else:
 				for func in functions:
 					if func in text:
-						functions[func] += 1
+						functions[func] += 1 # Gör case insensitive
 		for func in functions:
 			if functions[func] == 0:
 				unusedFunc.append(func)
@@ -121,7 +121,7 @@ class GenerateEventsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		controls = self.scanControls()
 		trimmedControls = [x for x in controls if x.name != "-"] # Ta bort controller utan namn
-		for c in trimmedControls:
+		for c in controls:
 			print(c)
 
 
