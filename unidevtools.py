@@ -119,6 +119,10 @@ class GenerateEventsCommand(sublime_plugin.TextCommand):
 
 
 	def run(self, edit):
+		done = False
+		if not done:
+			print("Unidevtools: Generate event callbacks\nEJ KLAR")
+			return
 		controls = self.scanControls()
 		trimmedControls = [x for x in controls if x.name != "-"] # Ta bort controller utan namn
 		for c in controls:
