@@ -97,39 +97,6 @@ class UnusedFunctionsCommand(sublime_plugin.TextCommand):
 		sublime.active_window().focus_view(f)
 
 # ---------------------------------------------
-# Generera händelsehantering. Funktioner som
-# hanterar de viktigaste händelserna för olika
-# kontroller kommer att skapas. Vissa kommer
-# vara implementerade men de flesta kommer
-# behöva kompleteras med specifik data.
-# ---------------------------------------------
-class GenerateEventsCommand(sublime_plugin.TextCommand):
-	def scanControls(self):
-		ctrlToFind = ["EF"]#,"D","CB","GR"]
-		controls = []
-		ctrlStart = self.view.find(">WINDOW", 0)
-		ctrlEnd = self.view.find(">SOURCE", 0)
-		lines = self.view.lines(sublime.Region(ctrlStart.b, ctrlEnd.a))
-		for line in lines:
-			text = self.view.substr(line)
-			if text[:2].rstrip() in ctrlToFind:
-				rowArr = text.split()
-				controls.append(WindowControl.WindowControl(self.view, rowArr[9], rowArr[0], rowArr[10]))
-		return controls
-
-
-	def run(self, edit):
-		done = False
-		if not done:
-			print("Unidevtools: Generate event callbacks\nEJ KLAR")
-			return
-		controls = self.scanControls()
-		trimmedControls = [x for x in controls if x.name != "-"] # Ta bort controller utan namn
-		for c in controls:
-			print(c)
-
-
-# ---------------------------------------------
 # Aktivera automatisk IDL-borttagning.
 # ---------------------------------------------
 class EnableAutoIdlRemovalCommand(sublime_plugin.TextCommand):
@@ -142,4 +109,3 @@ class EnableAutoIdlRemovalCommand(sublime_plugin.TextCommand):
 class DisableAutoIdlRemovalCommand(sublime_plugin.TextCommand):
 	def run(self, edit, prop):
 		self.view.settings().set(prop, False)
-

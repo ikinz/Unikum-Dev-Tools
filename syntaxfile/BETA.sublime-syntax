@@ -5,7 +5,7 @@
 # - Unikum AB -
 
 name: BETA
-file_extensions: [d, b, i]
+file_extensions: [d, b, i, dc, dt]
 scope: source.beta
 contexts:
   main:
